@@ -1,7 +1,7 @@
-from django.http import HttpResponse
-
-# Create your views here.
+from django.shortcuts import redirect
 
 
+# redirect index to admin panel
 def index(request):
-    return HttpResponse('<a href="/admin">Admin Site</a>')
+	response = redirect('/admin/')
+	return response
