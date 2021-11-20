@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} Patient List {% endblock %}
+
+
+{% block body %}
+
+<div class="p-2">
+	<h3>Patients</h3>
+</div>
+
+<div class="p-3">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">S.No.</th>
+				<th scope="col">Name</th>
+				<th scope="col">Age</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for patient in patients %}
+			<tr>
+				<td>{{ patient.id }}</td>
+				<td>
+					<a href="{% url 'patient' patient.id %}" class="link-secondary">
+						{{ patient.first_name }} {{ patient.last_name }}
+					</a>
+				</td>
+				<td>{{ patient.age }}</td>
+			</tr>
+			{% empty %}
+			<h2>No Patients Found</h2>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+
+{% endblock %}
