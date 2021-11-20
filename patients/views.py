@@ -1,15 +1,14 @@
-from django.views.generic import ListView, DetailView
 from .models import Patient
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
 def index(_request):
 	response = redirect('/patients/')
 	return response
 
-class PatientList(ListView):
-	model = Patient
-	context_object_name = 'patients'
+def patient_list(request):
+	patients = Patient.objects.all()
+	return render(request, 'patients/patient_list.html', {'patients': patients})
 
-class PatientDetail(DetailView):
-	model = Patient
-	context_object_name = 'patient'
+def patient_detail(request, pk):
+	patient = Patient.objects.get(pk=pk)
+	return render(request, 'patients/patient_detail.html', {'patient': patient})
