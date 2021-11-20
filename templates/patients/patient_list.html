@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %} Patient List {% endblock %}
+
+
+{% block body %}
+
+<div class="px-3">
+	<h3>Patients List</h3>
+</div>
+
+<div class="container mt-3 mx-0 p-3">
+	<form method="get">
+		<div class="mx-0 px-0 d-flex">
+			<input class="form-control" name="filter_patient" placeholder="Search" style="width:35%">
+			<button class="btn btn-primary mx-2">Search</button>
+		</div>
+	</form>
+
+</div>
+
+<div class="p-3">
+	<table class="table table-hover table-secondary">
+		<thead>
+			<tr>
+				<th scope="col">S.No.</th>
+				<th scope="col">Name</th>
+				<th scope="col">Age</th>
+				<th scope="col">Contact No.</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for patient in patients %}
+			<tr>
+				<td>{{ patient.id }}</td>
+				<td>
+					<a href="{% url 'patient' patient.id %}" class="link-dark">
+						{{ patient.first_name }} {{ patient.last_name }}
+					</a>
+				</td>
+				<td>{{ patient.age }}</td>
+				<td>{{ patient.phone_no }}</td>
+			</tr>
+			{% empty %}
+			<h2>No Patients Found</h2>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+
+{% endblock %}
