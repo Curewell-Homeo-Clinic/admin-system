@@ -43,5 +43,5 @@ def patient_detail(request, pk):
 		patient = Patient.objects.get(pk=pk)
 		cache.set(pk, patient)
 	
-	context = { 'patient': patient }
+	context = { 'patient': patient, 'patient_edit': f'/admin/patients/patient/{patient.id}/change', 'patient_delete': f'/admin/patients/patient/{patient.id}/delete' }
 	return render(request, 'patients/patient_detail.html', context)

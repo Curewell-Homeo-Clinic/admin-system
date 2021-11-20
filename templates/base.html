@@ -10,21 +10,11 @@
 	<title>{% block title %}{% endblock %} | Curewell</title>
 </head>
 
-<body class="bg-dark h-100" style="height:100vh">
+<body class="bg-dark text-light">
 	{% include 'navbar.html' %} {% block body %}{% endblock %}
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
-
-	<div class="container">
-		<footer class="py-3 my-4">
-			<ul class="nav justify-content-center border-bottom pb-3 mb-3">
-				<li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
-				<li class="nav-item"><a href="/admin" class="nav-link px-2 text-muted">Admin</a></li>
-			</ul>
-			<p class="text-center text-muted">© 2021 Curewell</p>
-		</footer>
-	</div>
 </body>
 
 </html>

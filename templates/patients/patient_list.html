@@ -5,8 +5,8 @@
 
 {% block body %}
 
-<div class="px-3 text-light">
-	<h3>Patients</h3>
+<div class="px-3">
+	<h3>Patients List</h3>
 </div>
 
 <div class="container mt-3 mx-0 p-3">
@@ -26,6 +26,7 @@
 				<th scope="col">S.No.</th>
 				<th scope="col">Name</th>
 				<th scope="col">Age</th>
+				<th scope="col">Contact No.</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -33,11 +34,12 @@
 			<tr>
 				<td>{{ patient.id }}</td>
 				<td>
-					<a href="{% url 'patient' patient.id %}" class="link-secondary">
+					<a href="{% url 'patient' patient.id %}" class="link-dark">
 						{{ patient.first_name }} {{ patient.last_name }}
 					</a>
 				</td>
 				<td>{{ patient.age }}</td>
+				<td>{{ patient.phone_no }}</td>
 			</tr>
 			{% empty %}
 			<h2>No Patients Found</h2>
