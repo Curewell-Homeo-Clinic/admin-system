@@ -27,6 +27,7 @@ def dashboard(request):
         'total_patients': Patient.objects.all().count(),
         'total_appointments': Appointment.objects.all().count(),
         'total_doctors': Doctor.objects.all().count(),
+        'active': 'dashboard'
     }
     return render(request, 'dashboard/dashboard.html', context)
 
@@ -52,7 +53,7 @@ def patient_list(request):
         else:
             patients = get_patient()
 
-    context = {'patients': patients}
+    context = {'patients': patients, 'active': 'patient'}
     return render(request, 'patients/patient_list.html', context=context)
 
 
@@ -67,7 +68,8 @@ def patient_detail(request, pk):
     context = {
         'patient': patient,
         'patient_edit': f'/admin/patients/patient/{patient.id}/change',
-        'patient_delete': f'/admin/patients/patient/{patient.id}/delete'
+        'patient_delete': f'/admin/patients/patient/{patient.id}/delete',
+        'active': 'patient'
     }
     return render(request, 'patients/patient_detail.html', context)
 
@@ -94,7 +96,7 @@ def appointment_list(request):
         else:
             appointments = get_appointment()
 
-    context = {'appointments': appointments}
+    context = {'appointments': appointments, 'active': 'appointment'}
     return render(request, 'appointments/appointments_list.html', context)
 
 
@@ -107,13 +109,12 @@ def appointment_detail(request, pk):
         cache.set(pk, appointment)
 
     context = {
-        'appointment':
-        appointment,
+        'appointment': appointment,
         'appointment_edit':
         f'/admin/patients/appointment/{appointment.id}/change',
         'appointment_delete':
-        f'/admin/patients/appointment/{appointment.id}/delete'
+        f'/admin/patients/appointment/{appointment.id}/delete',
+        'active': 'appointment'
     }
 
-    print(appointment)
     return render(request, 'appointments/appointment_detail.html', context)
