@@ -44,12 +44,12 @@ def get_patient(filter_patient=None):
 @login_required(login_url='/admin/login/')
 def patient_list(request):
     filter_patient = request.GET.get('filter_patient')
-    if cache.get(filter_patient):
-        patients = cache.get(filter_patient)
+    if cache.get(f'patient_{filter_patient}'):
+        patients = cache.get(f'patient_{filter_patient}')
     else:
         if filter_patient:
             patients = get_patient(filter_patient)
-            cache.set(filter_patient, patients, CACHE_TTL)
+            cache.set(f'patient_{filter_patient}', patients, CACHE_TTL)
         else:
             patients = get_patient()
 
@@ -59,11 +59,11 @@ def patient_list(request):
 
 @login_required(login_url='/admin/login/')
 def patient_detail(request, pk):
-    if cache.get(pk):
-        patient = cache.get(pk)
+    if cache.get(f'patient_{pk}'):
+        patient = cache.get(f'patient_{pk}')
     else:
         patient = Patient.objects.get(pk=pk)
-        cache.set(pk, patient, CACHE_TTL)
+        cache.set(f'patient_{pk}', patient, CACHE_TTL)
 
     context = {
         'patient': patient,
@@ -130,12 +130,13 @@ def get_appointment(patient_name=None):
 @login_required(login_url='/admin/login/')
 def appointment_list(request):
     filter_by_patient_name = request.GET.get('patient_name')
-    if cache.get(filter_by_patient_name):
-        return cache.get(filter_by_patient_name)
+    if cache.get(f'appointment_{filter_by_patient_name}'):
+        return cache.get(f'appointment_{filter_by_patient_name}')
     else:
         if filter_by_patient_name:
             appointments = get_appointment(patient_name=filter_by_patient_name)
-            cache.set(filter_by_patient_name, appointments, CACHE_TTL)
+            cache.set(f'appointment_{filter_by_patient_name}', appointments,
+                      CACHE_TTL)
         else:
             appointments = get_appointment()
 
@@ -145,11 +146,11 @@ def appointment_list(request):
 
 @login_required(login_url='/admin/login/')
 def appointment_detail(request, pk):
-    if cache.get(pk):
-        appointment = cache.get(pk)
+    if cache.get(f'appointment{pk}'):
+        appointment = cache.get(f'appointment{pk}')
     else:
         appointment = Appointment.objects.get(pk=pk)
-        cache.set(pk, appointment)
+        cache.set(f'appointment{pk}', appointment)
 
     context = {
         'appointment': appointment,
