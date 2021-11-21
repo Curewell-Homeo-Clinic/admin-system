@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %} Patient List {% endblock %}
+
+
+{% block body %}
+
+<div class="p-3">
+	<h4>Doctors List</h4>
+</div>
+
+{% include './list_page_utility_bar.html' %}
+
+<div class="p-3">
+	<table class="table table-hover bg-light bg-gradient rounded shadow">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Name</th>
+				<th scope="col">Age</th>
+				<th scope="col">Contact No.</th>
+				<th scope="col">Email</th>
+				<th scope="col">Detail</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for doctor in doctors %}
+			<tr>
+				<td>{{ doctor.id }}</td>
+				<td>
+					{{ doctor.first_name }} {{ doctor.last_name }}
+				</td>
+				<td>{{ doctor.age }}</td>
+				<td>{{ doctor.phone_no }}</td>
+				<td>{{ doctor.email }}</td>
+				<td>
+					<a href="{% url 'doctor' doctor.id %}" class="btn btn-sm btn-outline-secondary" role="button">
+						<i class="fas fa-eye me-2"></i>
+						View
+					</a>
+				</td>
+			</tr>
+			{% empty %}
+			<div class="alert alert-warning" role="alert">
+				<h4 class="mx-2">No Doctors Found</h4>
+				<a href="/Doctors/" class="btn btn-secondary mx-2" role="button">View All Doctors</a>
+			</div>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+
+{% endblock %}
