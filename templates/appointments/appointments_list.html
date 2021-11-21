@@ -18,6 +18,7 @@
 				<th scope="col">Doctor</th>
 				<th scope="col">Date</th>
 				<th scope="col">Time</th>
+				<th scope="col">View</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,6 +33,9 @@
 				<td>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
 				<td>{{ appointment.date }}</td>
 				<td>{{ appointment.time }}</td>
+				<td>
+					<a href="{% url 'appointment' appointment.id %}" class="btn btn-sm btn-outline-secondary">View</a>
+				</td>
 			</tr>
 			{% empty %}
 			<div class="alert alert-warning" role="alert">

@@ -5,6 +5,35 @@ Home
 {% endblock %}
 
 {% block body %}
-<a href="/appointments/">Appointments</a>
-<a href="/patients/">Patients</a>
+<div class="row m-2 w-50 text-dark">
+	<div class="col-sm-6">
+		<div class="card mh-50%">
+			<div class="card-body">
+				<img style="height: 24vh; width: 22vw;" src="https://etimg.etb2bimg.com/photo/75642114.cms"
+					class="card-img-top" alt="...">
+				<h5 class="card-title my-2">Patients</h5>
+				<!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+				<a href="/patients/" class="btn btn-info">View Patients</a>
+				<a role="button" class="btn btn-outline-success mx-2" href="/admin/patients/patient/add/">
+					Add Patient
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="card-body">
+				<img style="height: 24vh; width: 22vw;"
+					src="https://1iigqhoti4p36kwwhmb4218s-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/iStock-1194395223-1024x569.jpg"
+					class="card-img-top" alt="...">
+				<h5 class="card-title my-2">Appointments</h5>
+				<!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+				<a href="/appointments/" class="btn btn-info">View Appointments</a>
+				<a role="button" class="btn btn-outline-success mx-2" href="/admin/patients/appointment/add/">
+					Add Appointment
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}

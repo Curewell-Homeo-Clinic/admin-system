@@ -79,3 +79,21 @@ def appointment_list(request):
 
     context = {'appointments': appointments}
     return render(request, 'appointments/appointments_list.html', context)
+
+
+@login_required(login_url='/admin/login/')
+def appointment_detail(request, pk):
+    if cache.get(pk):
+        appointment = cache.get(pk)
+    else:
+        appointment = Appointment.objects.get(pk=pk)
+        cache.set(pk, appointment)
+
+    context = {
+        'appointment': appointment,
+        'appointment_edit':
+        f'/admin/patient/appointment/{appointment.id}/change',
+        'appointment_delete':
+        f'/admin/patient/appointment/{appointment.id}/delete'
+    }
+    return render(request, 'appointments/appointment_detail.html', context)
