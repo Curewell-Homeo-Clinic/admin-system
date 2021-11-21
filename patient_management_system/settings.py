@@ -1,11 +1,12 @@
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '((#ub(l909_r6)_@ezsggi-2%d8h+3@u^!e6p57tcb#g@05e=+'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -55,13 +56,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'patient_management_system.wsgi.application'
 
+database_name = config('DATABASE_NAME')
+database_host = config('DATABASE_HOST')
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'curewellTestDatabase',
+        'NAME': database_name,
         'CLIENT': {
-            'host':
-            'mongodb+srv://admin:Kj9xTCf41vp7vE6f@notjust.nedmi.mongodb.net/curewellTestDatabase?retryWrites=true&w=majority',
+            'host': database_host,
         }
     }
 }
@@ -101,13 +104,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
 # Internationalization
 
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Kolkata'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_L10N = True
 
@@ -118,3 +124,12 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]

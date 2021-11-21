@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 
-{% block title %} Patient Details {% endblock %}
+{% block title %} Doctor Details {% endblock %}
 
 
 {% block body %}
 
 <div class="p-3">
-	<h4>{{ patient.first_name }} {{ patient.last_name }}</h4>
+	<h4>{{ doctor.first_name }} {{ doctor.last_name }}</h4>
 </div>
 
 {% include 'components/back_button.html' %}
@@ -16,26 +16,30 @@
 	<table class="table table-hover bg-light bg-gradient rounded shadow">
 		<tr>
 			<th>First Name</th>
-			<td>{{ patient.first_name }}</td>
+			<td>{{ doctor.first_name }}</td>
 		</tr>
 		<tr>
 			<th>Last Name</th>
-			<td>{{ patient.last_name }}</td>
+			<td>{{ doctor.last_name }}</td>
 		</tr>
 		<tr>
 			<th>Age</th>
-			<td>{{ patient.age }}</td>
+			<td>{{ doctor.age }}</td>
 		</tr>
 		<tr>
 			<th>Contact No.</th>
-			<td>{{ patient.phone_no }}</td>
+			<td>{{ doctor.phone_no }}</td>
+		</tr>
+		<tr>
+			<th>Email</th>
+			<td>{{ doctor.email }}</td>
 		</tr>
 	</table>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-		<a href="{{ patient_edit }}" class="btn btn-outline-primary me-md-2" role="button">
+		<a href="{{ doctor_edit }}" class="btn btn-outline-primary me-md-2" role="button">
 			Edit
 		</a>
-		<a href="{{ patient_delete }}" class="btn btn-outline-danger" role="button">
+		<a href="{{ doctor_delete }}" class="btn btn-outline-danger" role="button">
 			Delete
 		</a>
 	</div>

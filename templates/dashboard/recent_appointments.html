@@ -1,0 +1,40 @@
+<div class="row my-5">
+	<h3 class="fs-4 mb-3">Recent Appointments</h3>
+	<div class="col">
+		<table class="table bg-light bg-gradient rounded shadow-sm  table-hover">
+			<thead>
+				<tr>
+					<th scope="col" width="50">#</th>
+					<th scope="col">Patient</th>
+					<th scope="col">Doctor</th>
+					<th scope="col">Date</th>
+					<th scope="col">Time</th>
+					<th scope="col">Detail</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for appointment in recent_appointments %}
+				<tr>
+					<td>{{ appointment.id }}</td>
+					<td>
+						{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}
+					</td>
+					<td>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+					<td>{{ appointment.date }}</td>
+					<td>{{ appointment.time }}</td>
+					<td>
+						<a href="{% url 'appointment' appointment.id %}" class="btn btn-sm btn-outline-secondary">
+							<i class="fas fa-eye me-2"></i>
+							View
+						</a>
+					</td>
+				</tr>
+				{% empty %}
+				<div class="alert alert-warning" role="alert">
+					<h4 class="mx-2">No Recent Appointments Found</h4>
+				</div>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
