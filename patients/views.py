@@ -7,13 +7,15 @@ from django.contrib.auth.decorators import login_required
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+
 
 def index(request):
     response = redirect('/patients/')
     return response
 
 
-def get_patient(request, filter_patient=None):
+def get_patient(filter_patient=None):
     if filter_patient:
         patients = Patient.objects.filter(first_name__icontains=filter_patient)
     else:
@@ -29,18 +31,16 @@ def patient_list(request):
         patients = cache.get(filter_patient)
     else:
         if filter_patient:
-            patients = get_patient(request, filter_patient)
+            patients = get_patient(filter_patient)
             cache.set(filter_patient, patients)
         else:
-            patients = get_patient(request)
+            patients = get_patient()
 
     context = {'patients': patients}
     return render(request, 'patients/patient_list.html', context=context)
 
 
-login_required(login_url='/admin/login/')
-
-
+@login_required(login_url='/admin/login/')
 def patient_detail(request, pk):
     if cache.get(pk):
         patient = cache.get(pk)

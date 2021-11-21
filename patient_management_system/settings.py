@@ -40,7 +40,7 @@ ROOT_URLCONF = 'patient_management_system.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ os.path.join(BASE_DIR, 'templates') ],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -59,25 +59,25 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'curewellTestDatabase',
-		'CLIENT': {
-			'host': 'mongodb+srv://admin:Kj9xTCf41vp7vE6f@notjust.nedmi.mongodb.net/curewellTestDatabase?retryWrites=true&w=majority',
-		}
+        'CLIENT': {
+            'host':
+            'mongodb+srv://admin:Kj9xTCf41vp7vE6f@notjust.nedmi.mongodb.net/curewellTestDatabase?retryWrites=true&w=majority',
+        }
     }
 }
 
-# CACHE_TTL = 60 * 60 * 24 * 365
 CACHE_TTL = 60 * 1500
 
 CACHES = {
-	'default': {
-		'BACKEND': 'django_redis.cache.RedisCache',
-		'LOCATION': 'redis://127.0.0.1:6379/1',
-		'OPTIONS': {
-			'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-		},
-		'KEY_PREFIX': 'curewell',
-		'TIMEOUT': CACHE_TTL,
-	}
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+        'KEY_PREFIX': 'curewell',
+        'TIMEOUT': CACHE_TTL,
+    }
 }
 
 # Password validation
