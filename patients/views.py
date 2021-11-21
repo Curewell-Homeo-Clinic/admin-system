@@ -40,9 +40,7 @@ def patient_list(request):
     return render(request, 'patients/patient_list.html', context=context)
 
 
-login_required(login_url='/admin/login/')
-
-
+@login_required(login_url='/admin/login/')
 def patient_detail(request, pk):
     if cache.get(pk):
         patient = cache.get(pk)
