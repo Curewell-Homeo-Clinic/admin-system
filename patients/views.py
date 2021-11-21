@@ -1,4 +1,4 @@
-from .models import Patient
+from .models import Appointment, Patient
 from django.shortcuts import redirect, render
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
@@ -11,8 +11,7 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 def index(request):
-    response = redirect('/patients/')
-    return response
+    return render(request, 'home.html')
 
 
 def get_patient(filter_patient=None):
@@ -54,3 +53,29 @@ def patient_detail(request, pk):
         'patient_delete': f'/admin/patients/patient/{patient.id}/delete'
     }
     return render(request, 'patients/patient_detail.html', context)
+
+
+def get_appointment(patient_name=None):
+    if patient_name:
+        patient = Patient.objects.filter(first_name__icontains=patient_name)
+        appointments = Appointment.objects.filter(patient__in=patient)
+    else:
+        appointments = Appointment.objects.all()
+
+    return appointments
+
+
+@login_required(login_url='/admin/login/')
+def appointment_list(request):
+    filter_by_patient_name = request.GET.get('patient_name')
+    if cache.get(filter_by_patient_name):
+        return cache.get(filter_by_patient_name)
+    else:
+        if filter_by_patient_name:
+            appointments = get_appointment(patient_name=filter_by_patient_name)
+            cache.set(filter_by_patient_name, appointments)
+        else:
+            appointments = get_appointment()
+
+    context = {'appointments': appointments}
+    return render(request, 'appointments/appointments_list.html', context)

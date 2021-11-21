@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %} Apointment List {% endblock %}
+
+{% block body %}
+
+<div class="px-3">
+	<h3>Appointments List</h3>
+</div>
+
+{% include './appointment_list_utility_bar.html' %}
+
+<div class="p-3">
+	<table class="table table-hover table-secondary">
+		<thead>
+			<tr>
+				<th scope="col">S.No.</th>
+				<th scope="col">Patient</th>
+				<th scope="col">Doctor</th>
+				<th scope="col">Date</th>
+				<th scope="col">Time</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for appointment in appointments %}
+			<tr>
+				<td>{{ appointment.id }}</td>
+				<td>
+					<a href="{% url 'patient' appointment.patient.id %}" class="link-dark">
+						{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}
+					</a>
+				</td>
+				<td>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+				<td>{{ appointment.date }}</td>
+				<td>{{ appointment.time }}</td>
+			</tr>
+			{% empty %}
+			<div class="alert alert-warning" role="alert">
+				<h4 class="mx-2">No Appointments Found</h4>
+				<button class="btn btn-secondary mx-2">
+					<a href="/appointments" class="text-light" style="text-decoration: none;">Get All Appointments</a>
+				</button>
+			</div>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endblock %}
