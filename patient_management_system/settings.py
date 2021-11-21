@@ -1,14 +1,15 @@
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '((#ub(l909_r6)_@ezsggi-2%d8h+3@u^!e6p57tcb#g@05e=+'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['curewell-admin.herokuapp.com', '127.0.0.1', 'localhost']
 
@@ -55,13 +56,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'patient_management_system.wsgi.application'
 
+database_name = config('DATABASE_NAME')
+database_host = config('DATABASE_HOST')
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'curewellTestDatabase',
+        'NAME': database_name,
         'CLIENT': {
-            'host':
-            'mongodb+srv://admin:Kj9xTCf41vp7vE6f@notjust.nedmi.mongodb.net/curewellTestDatabase?retryWrites=true&w=majority',
+            'host': database_host,
         }
     }
 }

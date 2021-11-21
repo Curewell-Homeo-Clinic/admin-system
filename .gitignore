@@ -1,4 +1,5 @@
-env/
+venv/
 staticfiles/
 __pycache__/
 dump.rdb
+.env
