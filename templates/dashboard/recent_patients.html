@@ -1,0 +1,32 @@
+<div class="row my-5">
+	<h3 class="fs-4 mb-3">Recent Patients</h3>
+	<div class="col">
+		<table class="table bg-light bg-gradient rounded shadow-sm  table-hover">
+			<thead>
+				<tr>
+					<th scope="col" width="50">#</th>
+					<th scope="col">Name</th>
+					<th scope="col">Age</th>
+					<th scope="col">Contact No.</th>
+					<th scope="col">Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for patient in recent_patients %}
+				<tr>
+					<th scope="row">{{ patient.id }}</th>
+					<td>{{ patient.first_name }} {{ patient.last_name }}</td>
+					<td>{{ patient.age }}</td>
+					<td>{{ patient.phone_no }}</td>
+					<td>
+						<a href="{% url 'patient' patient.id %}" class="btn btn-sm btn-outline-secondary">
+							<i class="fas fa-eye me-2"></i>
+							View
+						</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>

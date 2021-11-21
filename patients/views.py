@@ -1,5 +1,5 @@
-from .models import Appointment, Patient
-from django.shortcuts import redirect, render
+from .models import Appointment, Patient, Doctor
+from django.shortcuts import render
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
@@ -7,11 +7,28 @@ from django.contrib.auth.decorators import login_required
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
-CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
+def dashboard(request):
+    if cache.get('recent_patients'):
+        recent_patients = cache.get('recent_patients')
+    else:
+        recent_patients = Patient.objects.all().order_by('-id')[:10]
+        cache.set('recent_patients', recent_patients, CACHE_TTL)
 
-def index(request):
-    return render(request, 'home.html')
+    if cache.get('recent_appointments'):
+        recent_appointments = cache.get('recent_appointments')
+    else:
+        recent_appointments = Appointment.objects.all().order_by('-id')[:10]
+        cache.set('recent_appointments', recent_appointments, CACHE_TTL)
+
+    context = {
+        'recent_patients': recent_patients,
+        'recent_appointments': recent_appointments,
+        'total_patients': Patient.objects.all().count(),
+        'total_appointments': Appointment.objects.all().count(),
+        'total_doctors': Doctor.objects.all().count(),
+    }
+    return render(request, 'dashboard/dashboard.html', context)
 
 
 def get_patient(filter_patient=None):
@@ -31,7 +48,7 @@ def patient_list(request):
     else:
         if filter_patient:
             patients = get_patient(filter_patient)
-            cache.set(filter_patient, patients)
+            cache.set(filter_patient, patients, CACHE_TTL)
         else:
             patients = get_patient()
 
@@ -45,7 +62,7 @@ def patient_detail(request, pk):
         patient = cache.get(pk)
     else:
         patient = Patient.objects.get(pk=pk)
-        cache.set(pk, patient)
+        cache.set(pk, patient, CACHE_TTL)
 
     context = {
         'patient': patient,
@@ -73,7 +90,7 @@ def appointment_list(request):
     else:
         if filter_by_patient_name:
             appointments = get_appointment(patient_name=filter_by_patient_name)
-            cache.set(filter_by_patient_name, appointments)
+            cache.set(filter_by_patient_name, appointments, CACHE_TTL)
         else:
             appointments = get_appointment()
 
@@ -97,4 +114,6 @@ def appointment_detail(request, pk):
         'appointment_delete':
         f'/admin/patients/appointment/{appointment.id}/delete'
     }
+
+    print(appointment)
     return render(request, 'appointments/appointment_detail.html', context)
