@@ -10,7 +10,7 @@ SECRET_KEY = '((#ub(l909_r6)_@ezsggi-2%d8h+3@u^!e6p57tcb#g@05e=+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['curewell-admin.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['curewell-admin.herokuapp.com', '127.0.0.1', 'localhost']
 
 # Application definition
 
