@@ -90,10 +90,11 @@ def appointment_detail(request, pk):
         cache.set(pk, appointment)
 
     context = {
-        'appointment': appointment,
+        'appointment':
+        appointment,
         'appointment_edit':
-        f'/admin/patient/appointment/{appointment.id}/change',
+        f'/admin/patients/appointment/{appointment.id}/change',
         'appointment_delete':
-        f'/admin/patient/appointment/{appointment.id}/delete'
+        f'/admin/patients/appointment/{appointment.id}/delete'
     }
     return render(request, 'appointments/appointment_detail.html', context)

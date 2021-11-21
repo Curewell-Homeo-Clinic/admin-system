@@ -1,1 +1,50 @@
-<h2>Appointment Details</h2>
+{% extends "base.html" %}
+
+
+{% block title %} Appointment Details {% endblock %}
+
+
+{% block body %}
+
+<div class="p-3">
+	<h4>Appointment</h4>
+</div>
+
+{% include 'back_button.html' %}
+
+<div class="p-3">
+	<table class="table table-secondary table-hover">
+		<tr>
+			<th>Patient Name</th>
+			<td>
+				<a class="link-secondary" href="{% url 'patient' appointment.patient.id %}">
+					{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<th>Doctor</th>
+			<td>
+				{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}
+			</td>
+		</tr>
+		<tr>
+			<th>Date</th>
+			<td>{{ appointment.date }}</td>
+		</tr>
+		<tr>
+			<th>Time</th>
+			<td>{{ appointment.time }}</td>
+		</tr>
+	</table>
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+		<a href="{{ appointment_edit }}" class="btn btn-outline-primary me-md-2" role="button">
+			Edit
+		</a>
+		<a href="{{ appointment_delete }}" class="btn btn-outline-danger" role="button">
+			Delete
+		</a>
+	</div>
+</div>
+
+{% endblock %}
