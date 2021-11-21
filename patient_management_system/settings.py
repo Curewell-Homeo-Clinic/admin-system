@@ -66,7 +66,6 @@ DATABASES = {
     }
 }
 
-# CACHE_TTL = 60 * 60 * 24 * 365
 CACHE_TTL = 60 * 1500
 
 CACHES = {
