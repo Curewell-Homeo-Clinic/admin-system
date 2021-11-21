@@ -13,13 +13,11 @@
 {% include 'components/back_button.html' %}
 
 <div class="p-3">
-	<table class="table table-success table-hover">
+	<table class="table table-hover bg-light bg-gradient rounded shadow">
 		<tr>
 			<th>Patient Name</th>
 			<td>
-				<a class="link-secondary" href="{% url 'patient' appointment.patient.id %}">
-					{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}
-				</a>
+				{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}
 			</td>
 		</tr>
 		<tr>
