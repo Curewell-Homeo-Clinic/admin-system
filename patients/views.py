@@ -15,7 +15,7 @@ def index(request):
     return response
 
 
-def get_patient(request, filter_patient=None):
+def get_patient(filter_patient=None):
     if filter_patient:
         patients = Patient.objects.filter(first_name__icontains=filter_patient)
     else:
@@ -31,10 +31,10 @@ def patient_list(request):
         patients = cache.get(filter_patient)
     else:
         if filter_patient:
-            patients = get_patient(request, filter_patient)
+            patients = get_patient(filter_patient)
             cache.set(filter_patient, patients)
         else:
-            patients = get_patient(request)
+            patients = get_patient()
 
     context = {'patients': patients}
     return render(request, 'patients/patient_list.html', context=context)
