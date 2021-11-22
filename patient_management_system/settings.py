@@ -69,6 +69,13 @@ DATABASES = {
     }
 }
 
+import sys
+if 'test' in sys.argv or 'test_coverage' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+
 CACHE_TTL = 60 * 1500
 
 CACHES = {
