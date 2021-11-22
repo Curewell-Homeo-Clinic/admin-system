@@ -6,7 +6,7 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY', default='zzm.WW^$J|8Ls9si9Y4<7?_wLFcok"ynUT,7U},kkk~^RjqON>BKXMvHL,$~4&,D#(Ux)zzJX=w"kbq*|*J0UI,fGkMnCO:;Zh]')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
