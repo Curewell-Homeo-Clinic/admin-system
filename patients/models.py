@@ -1,6 +1,9 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+from patients.send_sms import send_sms
+from .send_mail import send_mail
+
 
 class Patient(models.Model):
     id = models.AutoField(primary_key=True)
@@ -40,3 +43,16 @@ class Appointment(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.DO_NOTHING)
     date = models.DateField(blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        send_mail(self, 'new')
+        send_sms(self, self.patient.phone_no, 'Appointment Added.')
+        super().save(*args, **kwargs)
+
+    def update(self, *args, **kwargs):
+        send_mail(self, 'update')
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        send_mail(self, 'delete')
+        super().save(*args, **kwargs)

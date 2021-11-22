@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>{{ title }}</title>
+</head>
+
+<body>
+	<p>
+		New appointment addded at {{ now }}.
+	</p>
+	<table border style="height: 300px; width: 400px;">
+		<tr>
+			<th>Patient Name</th>
+			<td>
+				{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}
+			</td>
+		</tr>
+		<tr>
+			<th>Doctor</th>
+			<td>
+				{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}
+			</td>
+		</tr>
+		<tr>
+			<th>Date</th>
+			<td>{{ appointment.date }}</td>
+		</tr>
+		<tr>
+			<th>Time</th>
+			<td>{{ appointment.time }}</td>
+		</tr>
+	</table>
+	<br>
+	<div>
+		<button
+			style="border: 1px solid darkslategray; background-color: lightskyblue; padding: 10px; border-radius: 5px;">
+			<a href="{{ appointment_edit }}" style="text-decoration: none; color: white;">
+				Edit
+			</a>
+		</button>
+		<button
+			style="border: 1px solid darkslategray; background-color: lightcoral; padding: 10px; border-radius: 5px;">
+			<a href="{{ appointment_delete }}" style="text-decoration: none; color: white;">
+				Delete
+			</a>
+		</button>
+	</div>
+</body>
+
+</html>
