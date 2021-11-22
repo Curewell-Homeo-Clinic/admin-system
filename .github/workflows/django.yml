@@ -8,7 +8,10 @@ on:
 
 jobs:
   build:
-
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
