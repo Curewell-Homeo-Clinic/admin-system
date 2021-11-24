@@ -49,6 +49,17 @@
 			Appointments
 		</a>
 		{% endif %}
+		{% if active == 'invoice' %}
+		<a href="/invoices/" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active">
+			<i class="fas fa-rupee-sign me-2"></i>
+			Invoice
+		</a>
+		{% else %}
+		<a href="/invoices/" class="list-group-item list-group-item-action bg-transparent second-text">
+			<i class="fas fa-rupee-sign me-2"></i>
+			Invoice
+		</a>
+		{% endif %}
 		<hr class="dropdown-divider" />
 		<a href="/admin/" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
 			<i class="fas fa-user-cog me-2"></i>

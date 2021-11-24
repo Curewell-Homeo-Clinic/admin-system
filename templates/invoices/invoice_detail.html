@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+
+{% block title %} Invoice Details {% endblock %}
+
+
+{% block body %}
+
+<div class="p-3">
+	<h4>Invoice</h4>
+</div>
+
+{% include 'components/back_button.html' %}
+
+<div class="p-3">
+	<table class="table table-hover bg-light bg-gradient rounded shadow">
+		<tr>
+			<th>Patient Name</th>
+			<td>
+				<a href="{% url 'patient' invoice.patient.id %}" class="link-secondary">
+					{{ invoice.patient.first_name }} {{ invoice.patient.last_name }}
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<th>Doctor</th>
+			<td>
+				<a href="{% url 'doctor' invoice.doctor.id %}" class="link-secondary">
+					{{ invoice.doctor.first_name }} {{ invoice.doctor.last_name }}
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<th>Date</th>
+			<td>{{ invoice.date }}</td>
+		</tr>
+		<tr>
+			<th>Time</th>
+			<td>{{ invoice.time }}</td>
+		</tr>
+		<tr>
+			<th>Consulation Fees</th>
+			<td class="money">&#8377;{{ invoice.consulation_fee }}</td>
+		</tr>
+		<tr>
+			<th>Medicine Fees</th>
+			<td class="money">&#8377;{{ invoice.medicine_fee }}</td>
+		</tr>
+		<tr>
+			<th>Total Fees</th>
+			<td class="money">&#8377;{{ invoice.total_fee }}</td>
+		</tr>
+	</table>
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+		<a href="{{ invoice_edit }}" class="btn btn-outline-primary me-md-2" role="button">
+			Edit
+		</a>
+		{% if invoice.pdf_link != None %}
+		<button onclick="window.open('print/', '_blank').focus()" class="btn btn-success me-md-2">
+			<i class="fas fa-file-pdf me-2"></i>
+			Print
+		</button>
+		{% endif %}
+	</div>
+</div>
+
+{% endblock %}
