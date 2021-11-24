@@ -6,8 +6,21 @@ Dashboard
 
 {% block body %}
 <div class="row g-3 my-2">
-	<div class="col-md-3" style="cursor: pointer;">
-		<div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+	{% if user.is_superuser %}
+	<div class="col-md-3">
+		<div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded"
+			style="cursor: pointer;">
+			<div>
+				<h3 class="fs-2 money">&#8377;{{ total_sales }}</h3>
+				<p class="fs-5">Sales</p>
+			</div>
+			<i class="fas fa-rupee-sign fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+		</div>
+	</div>
+	{% endif %}
+	<div class="col-md-3">
+		<div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded"
+			style="cursor: pointer;">
 			<div>
 				<h3 class="fs-2">{{ total_patients }}</h3>
 				<p class="fs-5">Patients</p>

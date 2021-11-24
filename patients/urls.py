@@ -1,6 +1,16 @@
 from django.urls import path
 
-from .views import appointment_detail, appointment_list, dashboard, doctor_detail, doctor_list, patient_list, patient_detail
+from .views import (
+	appointment_detail, 
+	appointment_list, 
+	dashboard, 
+	doctor_detail, 
+	doctor_list, 
+	patient_list, 
+	patient_detail,
+	invoice_list,
+	invoice_detail,
+)
 
 urlpatterns = [
     path('', dashboard, name='index'),
@@ -10,4 +20,6 @@ urlpatterns = [
     path('appointment/<int:pk>/', appointment_detail, name="appointment"),
     path('doctors/', doctor_list, name='doctors'),
     path('doctor/<int:pk>/', doctor_detail, name='doctor'),
+	path('invoices/', invoice_list, name='invoices'),
+	path('invoice/<int:pk>/', invoice_detail, name='invoice'),
 ]

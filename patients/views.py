@@ -1,13 +1,18 @@
-from .models import Appointment, Patient, Doctor
+from .models import Appointment, Patient, Doctor, Invoice
 from django.shortcuts import render
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
+def get_total_sales():
+	total_sales = Invoice.objects.all().aggregate(Sum('total_fee'))['total_fee__sum']
+	return total_sales
 
+@login_required(login_url='/admin/login/')
 def dashboard(request):
     if cache.get('recent_patients'):
         recent_patients = cache.get('recent_patients')
@@ -27,6 +32,7 @@ def dashboard(request):
         'total_patients': Patient.objects.all().count(),
         'total_appointments': Appointment.objects.all().count(),
         'total_doctors': Doctor.objects.all().count(),
+		'total_sales': get_total_sales(),
         'active': 'dashboard'
     }
     return render(request, 'dashboard/dashboard.html', context)
@@ -162,3 +168,44 @@ def appointment_detail(request, pk):
     }
 
     return render(request, 'appointments/appointment_detail.html', context)
+
+def get_invoice(patient_name=None):
+	if patient_name:
+		patient = Patient.objects.filter(first_name__icontains=patient_name)
+		invoices = Invoice.objects.filter(patient__in=patient)
+	else:
+		invoices = Invoice.objects.all()
+
+	return invoices
+
+@login_required(login_url='/admin/login/')
+def invoice_list(request):
+	filter_by_patient_name = request.GET.get('patient_name')
+	if cache.get(f'invoice_{filter_by_patient_name}'):
+		return cache.get(f'invoice_{filter_by_patient_name}')
+	else:
+		if filter_by_patient_name:
+			invoices = get_invoice(patient_name=filter_by_patient_name)
+			cache.set(f'invoice_{filter_by_patient_name}', invoices, CACHE_TTL)
+		else:
+			invoices = get_invoice()
+
+	context = {'invoices': invoices, 'active': 'invoice'}
+	return render(request, 'invoices/invoice_list.html', context)
+
+@login_required(login_url='/admin/login/')
+def invoice_detail(request, pk):
+	if cache.get(f'invoice{pk}'):
+		invoice = cache.get(f'invoice{pk}')
+	else:
+		invoice = Invoice.objects.get(pk=pk)
+		cache.set(f'invoice{pk}', invoice)
+
+	context = {
+		'invoice': invoice,
+		'invoice_edit':
+		f'/admin/patients/invoice/{invoice.id}/change',
+		'active': 'invoice'
+	}
+
+	return render(request, 'invoices/invoice_detail.html', context)

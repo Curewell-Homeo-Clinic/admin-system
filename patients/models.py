@@ -3,7 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 from patients.send_sms import send_sms
 from .send_mail import send_mail
-
+from decouple import config
 
 class Patient(models.Model):
     id = models.AutoField(primary_key=True)
@@ -61,3 +61,18 @@ class Appointment(models.Model):
     def delete(self, *args, **kwargs):
         send_mail(self, 'cancel')
         super().save(*args, **kwargs)
+
+class Invoice(models.Model):
+	id = models.AutoField(primary_key=True)
+	patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
+	doctor = models.ForeignKey(Doctor, on_delete=models.DO_NOTHING)
+	date = models.DateField(blank=True, null=True, auto_now_add=True)
+	time = models.TimeField(auto_now_add=True, blank=True, null=True)
+	consulation_fee = models.PositiveSmallIntegerField(blank=True, null=True, default=config('CONSULTATION_FEE'))
+	medicine_fee = models.PositiveSmallIntegerField(blank=True, null=True)
+	total_fee = models.PositiveSmallIntegerField(blank=True, null=True)
+
+	def save(self, *args, **kwargs):
+		total_fee = self.consulation_fee + self.medicine_fee
+		self.total_fee = total_fee
+		super().save(*args, **kwargs)
