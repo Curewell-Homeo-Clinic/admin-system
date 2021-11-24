@@ -16,6 +16,9 @@ class Patient(models.Model):
         validators=[MaxValueValidator(100),
                     MinValueValidator(1)])
     admitted_at = models.DateField(auto_now_add=True, blank=True, null=True)
+    email= models.EmailField(blank=True, null=True)
+    address= models.CharField(max_length=200, blank=True, null=True)
+    occupation= models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return f'{ self.first_name } { self.last_name }'
@@ -32,6 +35,8 @@ class Doctor(models.Model):
         null=True,
         validators=[MaxValueValidator(100),
                     MinValueValidator(1)])
+    address= models.CharField(max_length=200, blank=True, null=True)
+    specialization= models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return f'{ self.first_name } { self.last_name }'
@@ -46,7 +51,7 @@ class Appointment(models.Model):
 
     def save(self, *args, **kwargs):
         send_mail(self, 'new')
-        send_sms(self, self.patient.phone_no, 'Appointment Added.')
+        # send_sms(self, self.patient.phone_no, 'Appointment Added.')
         super().save(*args, **kwargs)
 
     def update(self, *args, **kwargs):
@@ -54,5 +59,5 @@ class Appointment(models.Model):
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        send_mail(self, 'delete')
+        send_mail(self, 'cancel')
         super().save(*args, **kwargs)

@@ -7,7 +7,7 @@
 
 <body>
 	<p>
-		New appointment addded at {{ now }}.
+		<b>{{ event }}</b> at {{ now }}.
 	</p>
 	<table border style="height: 300px; width: 400px;">
 		<tr>
@@ -32,6 +32,7 @@
 		</tr>
 	</table>
 	<br>
+	{% if is_delete == False %}
 	<div>
 		<button
 			style="border: 1px solid darkslategray; background-color: lightskyblue; padding: 10px; border-radius: 5px;">
@@ -39,13 +40,8 @@
 				Edit
 			</a>
 		</button>
-		<button
-			style="border: 1px solid darkslategray; background-color: lightcoral; padding: 10px; border-radius: 5px;">
-			<a href="{{ appointment_delete }}" style="text-decoration: none; color: white;">
-				Delete
-			</a>
-		</button>
 	</div>
+	{% endif %}
 </body>
 
 </html>

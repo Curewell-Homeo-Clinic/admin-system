@@ -6,12 +6,14 @@ from datetime import datetime
 
 
 def send_mail(self, event):
+    is_delete = False
     if event == 'new':
         title = 'New Appointment Added'
     elif event == 'update':
         title = 'Appointment Updated'
     elif event == 'cancel':
         title = 'Appointment Cancelled'
+        is_delete = True
     elif event == None:
         raise ValueError('No event passed.')
     else:
@@ -26,8 +28,9 @@ def send_mail(self, event):
         'appointment_delete':
         f'{config("HOST")}/admin/patients/appointment/{self.id}/delete',
         'now': datetime.now().strftime('%d/%m/%Y %H:%M'),
+		'event': title,
+		'is_delete': is_delete
     }
-    print(context['now'])
     html_content = render_to_string("email_temp.html", context)
     text_content = strip_tags(html_content)
     email = EmailMultiAlternatives(
