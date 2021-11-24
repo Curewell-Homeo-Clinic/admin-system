@@ -126,9 +126,9 @@ def doctor_detail(request, pk):
 def get_appointment(patient_name=None):
     if patient_name:
         patient = Patient.objects.filter(first_name__icontains=patient_name)
-        appointments = Appointment.objects.filter(patient__in=patient)
+        appointments = Appointment.objects.filter(patient__in=patient).order_by('-id')
     else:
-        appointments = Appointment.objects.all()
+        appointments = Appointment.objects.all().order_by('-id')
 
     return appointments
 
@@ -172,9 +172,9 @@ def appointment_detail(request, pk):
 def get_invoice(patient_name=None):
 	if patient_name:
 		patient = Patient.objects.filter(first_name__icontains=patient_name)
-		invoices = Invoice.objects.filter(patient__in=patient)
+		invoices = Invoice.objects.filter(patient__in=patient).order_by('-id')
 	else:
-		invoices = Invoice.objects.all()
+		invoices = Invoice.objects.all().order_by('-id')
 
 	return invoices
 
@@ -209,3 +209,18 @@ def invoice_detail(request, pk):
 	}
 
 	return render(request, 'invoices/invoice_detail.html', context)
+
+@login_required(login_url='/admin/login/')
+def invoice_print(request, pk):
+	if cache.get(f'invoice{pk}'):
+		invoice = cache.get(f'invoice{pk}')
+	else:
+		invoice = Invoice.objects.get(pk=pk)
+		cache.set(f'invoice{pk}', invoice)
+
+	context = {
+		'invoice': invoice,
+		'blank_row': range(6)
+	}
+
+	return render(request, 'invoices/print.html', context)

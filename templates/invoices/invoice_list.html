@@ -18,6 +18,7 @@
 				<th scope="col">Date</th>
 				<th scope="col">Sum Total</th>
 				<th scope="col">Details</th>
+				<th scope="col">Download</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,6 +36,13 @@
 						<i class="fas fa-eye me-2"></i>
 						View
 					</a>
+				</td>
+				<td>
+					<button onclick='window.open("/invoice/{{invoice.id}}/print/", "_blank").focus()'
+						class="btn btn-sm btn-outline-success">
+						<i class="fas fa-file-pdf me-2"></i>
+						Print
+					</button>
 				</td>
 			</tr>
 			{% empty %}

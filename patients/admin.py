@@ -42,6 +42,7 @@ class AppointmentAdmin(admin.ModelAdmin):
 
 @admin.register(Invoice)
 class InvoiceAdmin(admin.ModelAdmin):
+	exclude = ['total_fee']
 	list_display = ('id', 'patient', 'doctor', 'date', 'total_fee')
 	list_display_links = ('id', 'patient', 'doctor')
 	list_filter= ('date', 'doctor',)
