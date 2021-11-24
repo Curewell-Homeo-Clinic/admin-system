@@ -9,7 +9,7 @@ dnspython==2.1.0
 gunicorn==20.1.0
 hiredis==2.0.0
 idna==3.3
-pdfkit==1.0.0
+pip-autoremove==0.10.0
 PyJWT==2.3.0
 pymongo==3.12.1
 python-decouple==3.5
