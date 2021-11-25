@@ -51,7 +51,7 @@ class Appointment(models.Model):
 
     def save(self, *args, **kwargs):
         send_mail(self, 'new')
-		message = f'Dear { self.patient.first_name } { self.patient.last_name } your appointment with Dr. {self.doctor.first_name} {self.doctor.first_name} has been booked successfully for {self.date} at {self.time}'
+        message = f'Dear { self.patient.first_name } { self.patient.last_name } your appointment with Dr. {self.doctor.first_name} {self.doctor.first_name} has been booked successfully for {self.date} at {self.time}'
         send_sms(self, self.patient.phone_no, message)
         super().save(*args, **kwargs)
 
@@ -61,7 +61,8 @@ class Appointment(models.Model):
 
     def delete(self, *args, **kwargs):
         send_mail(self, 'cancel')
-		message = f'Dear { self.patient.first_name } { self.patient.last_name } your appointment with Dr. {self.doctor.first_name} {self.doctor.first_name} has been cancelled for {self.date} at {self.time}'
+        message = f'Dear { self.patient.first_name } { self.patient.last_name } your appointment with Dr. {self.doctor.first_name} {self.doctor.first_name} has been cancelled for {self.date} at {self.time}'
+        send_sms(self, self.patient.phone_no, message)
         super().save(*args, **kwargs)
 
 class Invoice(models.Model):
