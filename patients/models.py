@@ -51,7 +51,7 @@ class Appointment(models.Model):
 
     def save(self, *args, **kwargs):
         send_mail(self, 'new')
-        # send_sms(self, self.patient.phone_no, 'Appointment Added.')
+        send_sms(self, self.patient.phone_no, 'Appointment Added.')
         super().save(*args, **kwargs)
 
     def update(self, *args, **kwargs):

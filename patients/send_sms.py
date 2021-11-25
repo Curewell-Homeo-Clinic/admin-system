@@ -8,6 +8,6 @@ def send_sms(self, phone_no, body):
     client = Client(account_sid, auth_token)
     message = client.messages.create(body=body,
                                      from_=config('TWILIO_PHONE_NUMBER'),
-                                     to=f'+91{phone_no}')
+                                     to=f'whatsapp:+91{phone_no}')
     print(message.sid)
     return message.sid
