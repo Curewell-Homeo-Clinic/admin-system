@@ -25,6 +25,10 @@
 						</a>
 					</td>
 				</tr>
+				{% empty %}
+				<div class="alert alert-warning" role="alert">
+					<h4 class="mx-2">No Recent Patients Found</h4>
+				</div>
 				{% endfor %}
 			</tbody>
 		</table>
