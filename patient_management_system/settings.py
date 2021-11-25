@@ -9,9 +9,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='zzm.WW^$J|8Ls9si9Y4<7?_wLFcok"ynUT,7U},kkk~^RjqON>BKXMvHL,$~4&,D#(Ux)zzJX=w"kbq*|*J0UI,fGkMnCO:;Zh]')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['curewell-admin.herokuapp.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['curewell.herokuapp.com', '127.0.0.1', 'localhost']
 
 # EMAIL Config
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
