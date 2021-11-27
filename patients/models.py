@@ -19,6 +19,7 @@ class Patient(models.Model):
     email= models.EmailField(blank=True, null=True)
     address= models.CharField(max_length=200, blank=True, null=True)
     occupation= models.CharField(max_length=100, blank=True, null=True)
+    ailment = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return f'{ self.first_name } { self.last_name }'
