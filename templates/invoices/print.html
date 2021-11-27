@@ -41,10 +41,14 @@
 			<p class="flex-end"><b>Date:</b> {{ invoice.date }}</p>
 		</div>
 		<div class="container">
-			<p><b>M/s</b> {{ invoice.patient.first_name }} {{ invoice.patient.last_name }}</p>
+			<p style="text-transform: capitalize;">
+				<b>M/s</b> {{ invoice.patient.first_name }} {{ invoice.patient.last_name }}
+			</p>
 		</div>
 		<div class="container">
-			<p><b>Doctor:</b> {{ invoice.doctor.first_name }} {{ invoice.doctor.last_name }}</p>
+			<p style="text-transform: capitalize;">
+				<b>Doctor:</b> {{ invoice.doctor.first_name }} {{ invoice.doctor.last_name }}
+			</p>
 		</div>
 		<div class="container d-flex justify-content-between">
 			<p><b>Address:</b> {{ invoice.patient.address }}</p>

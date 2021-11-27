@@ -25,10 +25,11 @@
 			{% for invoice in invoices %}
 			<tr>
 				<td>{{ invoice.id }}</td>
-				<td>
+				<td style="text-transform: capitalize;">
 					{{ invoice.patient.first_name }} {{ invoice.patient.last_name }}
 				</td>
-				<td>{{ invoice.doctor.first_name }} {{ invoice.doctor.last_name }}</td>
+				<td style="text-transform: capitalize;">{{ invoice.doctor.first_name }} {{ invoice.doctor.last_name }}
+				</td>
 				<td>{{ invoice.date }}</td>
 				<td class="money">&#8377;{{ invoice.total_fee }}</td>
 				<td>

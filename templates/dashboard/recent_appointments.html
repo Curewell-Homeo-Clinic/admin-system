@@ -16,10 +16,11 @@
 				{% for appointment in recent_appointments %}
 				<tr>
 					<td>{{ appointment.id }}</td>
-					<td>
+					<td style="text-transform: capitalize;">
 						{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}
 					</td>
-					<td>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+					<td style="text-transform: capitalize;">{{ appointment.doctor.first_name }} {{
+						appointment.doctor.last_name }}</td>
 					<td>{{ appointment.date }}</td>
 					<td>{{ appointment.time }}</td>
 					<td>
