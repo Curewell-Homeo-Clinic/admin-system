@@ -1,13 +1,11 @@
 name: Django CI
 
 on:
-  push:
-    branches: [master]
   pull_request:
     branches: [master]
 
 jobs:
-  build:
+  test:
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
