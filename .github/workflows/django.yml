@@ -19,6 +19,7 @@ jobs:
       CONSULTATION_FEE: ${{ secrets.CONSULTATION_FEE }}
       REDIS_URL: ${{ secrets.REDIS_URL }}
       REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
