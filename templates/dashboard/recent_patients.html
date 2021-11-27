@@ -15,7 +15,7 @@
 				{% for patient in recent_patients %}
 				<tr>
 					<th scope="row">{{ patient.id }}</th>
-					<td>{{ patient.first_name }} {{ patient.last_name }}</td>
+					<td style="text-transform: capitalize;">{{ patient.first_name }} {{ patient.last_name }}</td>
 					<td>{{ patient.age }}</td>
 					<td>{{ patient.phone_no }}</td>
 					<td>

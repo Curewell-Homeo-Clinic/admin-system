@@ -17,7 +17,8 @@
 		<tr>
 			<th>Patient Name</th>
 			<td>
-				<a href="{% url 'patient' invoice.patient.id %}" class="link-secondary">
+				<a style="text-transform: capitalize;" href="{% url 'patient' invoice.patient.id %}"
+					class="link-secondary">
 					{{ invoice.patient.first_name }} {{ invoice.patient.last_name }}
 				</a>
 			</td>
@@ -25,7 +26,8 @@
 		<tr>
 			<th>Doctor</th>
 			<td>
-				<a href="{% url 'doctor' invoice.doctor.id %}" class="link-secondary">
+				<a style="text-transform: capitalize;" href="{% url 'doctor' invoice.doctor.id %}"
+					class="link-secondary">
 					{{ invoice.doctor.first_name }} {{ invoice.doctor.last_name }}
 				</a>
 			</td>
