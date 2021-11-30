@@ -7,6 +7,8 @@ on:
       - '.github/workflows/**'
       - 'patient_management_system/**'
       - 'patients/**'
+      - 'manage.py'
+      - 'requirements.txt'
       - '!static/**'
       - '!templates/**'
 
