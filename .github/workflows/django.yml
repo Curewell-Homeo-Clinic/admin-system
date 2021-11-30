@@ -3,6 +3,14 @@ name: Django CI
 on:
   pull_request:
     branches: [master]
+    paths: 
+      - '.github/workflows/**'
+      - 'patient_management_system/**'
+      - 'patients/**'
+      - 'manage.py'
+      - 'requirements.txt'
+      - '!static/**'
+      - '!templates/**'
 
 jobs:
   test:
