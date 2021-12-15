@@ -15,6 +15,19 @@
 			Dashboard
 		</a>
 		{% endif %}
+		{% if user.is_superuser %}
+			{% if active == 'stats' %}
+			<a href="{% url 'stats' %}" class="list-group-item list-group-item-action bg-transparent second-text active">
+				<i class="fas fa-thermometer-half me-2"></i>
+				Statistics
+			</a>
+			{% else %}
+			<a href="{% url 'stats' %}" class="list-group-item list-group-item-action bg-transparent second-text">
+				<i class="fas fa-thermometer-half me-2"></i>
+				Statistics
+			</a>
+			{% endif %}
+		{% endif %}
 		{% if active == 'patient' %}
 		<a href="/patients/" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active">
 			<i class="fas fa-user-injured me-2"></i>

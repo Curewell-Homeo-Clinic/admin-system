@@ -9,7 +9,6 @@ from django.http import JsonResponse
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 LOGIN_URL = getattr(settings, 'LOGIN_URL')
-print(f"\n\n{LOGIN_URL}\n\n")
 
 def get_total_sales():
     total_sales = Invoice.objects.all().aggregate(
@@ -52,7 +51,10 @@ def get_data(request, *args, **kwargs):
 
 @login_required(login_url=LOGIN_URL)
 def stats(request):
-    return render(request, 'dashboard/sales.html', {})
+    context = {
+        'active': 'stats'
+    }
+    return render(request, 'stats/stats.html', context)
 
 def get_patient(filter_patient=None):
     if filter_patient:
