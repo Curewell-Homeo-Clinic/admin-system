@@ -29,6 +29,9 @@
 		crossorigin="anonymous"></script>
 	<script src="{% static 'js/script.js' %}"></script>
 	<script src="{% static 'js/format_ammount.js' %}"></script>
+	{% if active == 'stats' %}
+	<script src="{% static 'js/stats.js' %}"></script>
+	{% endif %}
 </body>
 
 </html>

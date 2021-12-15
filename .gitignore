@@ -3,3 +3,4 @@ staticfiles/
 __pycache__/
 dump.rdb
 .env
+migration/__pycache__/
