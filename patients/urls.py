@@ -11,6 +11,7 @@ from .views import (
 	invoice_list,
 	invoice_detail,
 	invoice_print,
+	get_data
 )
 
 urlpatterns = [
@@ -24,4 +25,5 @@ urlpatterns = [
 	path('invoices/', invoice_list, name='invoices'),
 	path('invoice/<int:pk>/', invoice_detail, name='invoice'),
 	path('invoice/<int:pk>/print/', invoice_print, name='invoice_print'),
+	path('api/v1/get_data', get_data, name='api__get_data')
 ]

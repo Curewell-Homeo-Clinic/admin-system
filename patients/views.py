@@ -5,14 +5,19 @@ from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
+from django.http import JsonResponse
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+LOGIN_URL = getattr(settings, 'LOGIN_URL')
+print(f"\n\n{LOGIN_URL}\n\n")
 
 def get_total_sales():
-	total_sales = Invoice.objects.all().aggregate(Sum('total_fee'))['total_fee__sum']
-	return total_sales
+    total_sales = Invoice.objects.all().aggregate(
+        Sum('total_fee'))['total_fee__sum']
+    return total_sales
 
-@login_required(login_url='/admin/login/')
+
+@login_required(login_url=LOGIN_URL)
 def dashboard(request):
     if cache.get('recent_patients'):
         recent_patients = cache.get('recent_patients')
@@ -32,11 +37,22 @@ def dashboard(request):
         'total_patients': Patient.objects.all().count(),
         'total_appointments': Appointment.objects.all().count(),
         'total_doctors': Doctor.objects.all().count(),
-		'total_sales': get_total_sales(),
+        'total_sales': get_total_sales(),
         'active': 'dashboard'
     }
     return render(request, 'dashboard/dashboard.html', context)
 
+
+def get_data(request, *args, **kwargs):
+    data = {
+        "sales": get_total_sales(),
+        "customers": 10,
+    }
+    return JsonResponse(data)
+
+@login_required(login_url=LOGIN_URL)
+def stats(request):
+    return render(request, 'dashboard/sales.html', {})
 
 def get_patient(filter_patient=None):
     if filter_patient:
@@ -47,7 +63,7 @@ def get_patient(filter_patient=None):
     return patients
 
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url=LOGIN_URL)
 def patient_list(request):
     filter_patient = request.GET.get('filter_patient')
     if cache.get(f'patient_{filter_patient}'):
@@ -63,7 +79,7 @@ def patient_list(request):
     return render(request, 'patients/patient_list.html', context=context)
 
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url=LOGIN_URL)
 def patient_detail(request, pk):
     if cache.get(f'patient_{pk}'):
         patient = cache.get(f'patient_{pk}')
@@ -89,7 +105,7 @@ def get_doctor(filter_doctor=None):
     return doctors
 
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url=LOGIN_URL)
 def doctor_list(request):
     filter_doctor = request.GET.get('filter_doctor')
     if cache.get(f'doctor_{filter_doctor}'):
@@ -105,7 +121,7 @@ def doctor_list(request):
     return render(request, 'doctors/doctor_list.html', context=context)
 
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url=LOGIN_URL)
 def doctor_detail(request, pk):
     if cache.get(f'doctor_{pk}'):
         doctor = cache.get(f'doctor_{pk}')
@@ -126,14 +142,15 @@ def doctor_detail(request, pk):
 def get_appointment(patient_name=None):
     if patient_name:
         patient = Patient.objects.filter(first_name__icontains=patient_name)
-        appointments = Appointment.objects.filter(patient__in=patient).order_by('-id')
+        appointments = Appointment.objects.filter(
+            patient__in=patient).order_by('-id')
     else:
         appointments = Appointment.objects.all().order_by('-id')
 
     return appointments
 
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url=LOGIN_URL)
 def appointment_list(request):
     filter_by_patient_name = request.GET.get('patient_name')
     if cache.get(f'appointment_{filter_by_patient_name}'):
@@ -150,7 +167,7 @@ def appointment_list(request):
     return render(request, 'appointments/appointments_list.html', context)
 
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url=LOGIN_URL)
 def appointment_detail(request, pk):
     if cache.get(f'appointment{pk}'):
         appointment = cache.get(f'appointment{pk}')
@@ -169,58 +186,58 @@ def appointment_detail(request, pk):
 
     return render(request, 'appointments/appointment_detail.html', context)
 
+
 def get_invoice(patient_name=None):
-	if patient_name:
-		patient = Patient.objects.filter(first_name__icontains=patient_name)
-		invoices = Invoice.objects.filter(patient__in=patient).order_by('-id')
-	else:
-		invoices = Invoice.objects.all().order_by('-id')
+    if patient_name:
+        patient = Patient.objects.filter(first_name__icontains=patient_name)
+        invoices = Invoice.objects.filter(patient__in=patient).order_by('-id')
+    else:
+        invoices = Invoice.objects.all().order_by('-id')
 
-	return invoices
+    return invoices
 
-@login_required(login_url='/admin/login/')
+
+@login_required(login_url=LOGIN_URL)
 def invoice_list(request):
-	filter_by_patient_name = request.GET.get('patient_name')
-	if cache.get(f'invoice_{filter_by_patient_name}'):
-		return cache.get(f'invoice_{filter_by_patient_name}')
-	else:
-		if filter_by_patient_name:
-			invoices = get_invoice(patient_name=filter_by_patient_name)
-			cache.set(f'invoice_{filter_by_patient_name}', invoices, CACHE_TTL)
-		else:
-			invoices = get_invoice()
+    filter_by_patient_name = request.GET.get('patient_name')
+    if cache.get(f'invoice_{filter_by_patient_name}'):
+        return cache.get(f'invoice_{filter_by_patient_name}')
+    else:
+        if filter_by_patient_name:
+            invoices = get_invoice(patient_name=filter_by_patient_name)
+            cache.set(f'invoice_{filter_by_patient_name}', invoices, CACHE_TTL)
+        else:
+            invoices = get_invoice()
 
-	context = {'invoices': invoices, 'active': 'invoice'}
-	return render(request, 'invoices/invoice_list.html', context)
+    context = {'invoices': invoices, 'active': 'invoice'}
+    return render(request, 'invoices/invoice_list.html', context)
 
-@login_required(login_url='/admin/login/')
+
+@login_required(login_url=LOGIN_URL)
 def invoice_detail(request, pk):
-	if cache.get(f'invoice{pk}'):
-		invoice = cache.get(f'invoice{pk}')
-	else:
-		invoice = Invoice.objects.get(pk=pk)
-		cache.set(f'invoice{pk}', invoice)
+    if cache.get(f'invoice{pk}'):
+        invoice = cache.get(f'invoice{pk}')
+    else:
+        invoice = Invoice.objects.get(pk=pk)
+        cache.set(f'invoice{pk}', invoice)
 
-	context = {
-		'invoice': invoice,
-		'invoice_edit':
-		f'/admin/patients/invoice/{invoice.id}/change',
-		'active': 'invoice'
-	}
+    context = {
+        'invoice': invoice,
+        'invoice_edit': f'/admin/patients/invoice/{invoice.id}/change',
+        'active': 'invoice'
+    }
 
-	return render(request, 'invoices/invoice_detail.html', context)
+    return render(request, 'invoices/invoice_detail.html', context)
 
-@login_required(login_url='/admin/login/')
+
+@login_required(login_url=LOGIN_URL)
 def invoice_print(request, pk):
-	if cache.get(f'invoice{pk}'):
-		invoice = cache.get(f'invoice{pk}')
-	else:
-		invoice = Invoice.objects.get(pk=pk)
-		cache.set(f'invoice{pk}', invoice)
+    if cache.get(f'invoice{pk}'):
+        invoice = cache.get(f'invoice{pk}')
+    else:
+        invoice = Invoice.objects.get(pk=pk)
+        cache.set(f'invoice{pk}', invoice)
 
-	context = {
-		'invoice': invoice,
-		'blank_row': range(6)
-	}
+    context = {'invoice': invoice, 'blank_row': range(6)}
 
-	return render(request, 'invoices/print.html', context)
+    return render(request, 'invoices/print.html', context)
