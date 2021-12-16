@@ -38,7 +38,7 @@ def dashboard(request):
 
 
 @staff_member_required
-def get_sales_chart(request, year):
+def get_monthly_sales_chart_data(request, year):
     sales_dict = get_year_dict()
 
     months = [
