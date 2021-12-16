@@ -1,11 +1,12 @@
 from .models import Appointment, Patient, Doctor, Invoice
-from .utils import get_total_monthly_sales
+from .utils import get_current_month_sales, get_year_dict, get_month_sales
 from django.shortcuts import render
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.contrib.admin.views.decorators import staff_member_required
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 LOGIN_URL = getattr(settings, 'LOGIN_URL')
@@ -30,25 +31,35 @@ def dashboard(request):
         'recent_appointments': recent_appointments,
         'total_patients': Patient.objects.all().count(),
         'total_appointments': Appointment.objects.all().count(),
-        'total_sales': get_total_monthly_sales(),
+        'total_sales': get_current_month_sales(),
         'active': 'dashboard'
     }
     return render(request, 'dashboard/dashboard.html', context)
 
 
-def get_data(request, *args, **kwargs):
-    data = {
-        "sales": get_total_sales(),
-        "customers": 10,
-    }
-    return JsonResponse(data)
+@staff_member_required
+def get_sales_chart(request, year):
+    sales_dict = get_year_dict()
+
+    months = [
+        'January', 'February', 'March', 'April', 'May', 'June', 'July',
+        'August', 'September', 'October', 'November', 'December'
+    ]
+
+    for month in months:
+        sales_dict[month] = get_month_sales(year, months.index(month) + 1)
+
+    return JsonResponse({
+        'labels': list(sales_dict.keys()),
+        'data': list(sales_dict.values())
+    })
+
 
 @login_required(login_url=LOGIN_URL)
 def stats(request):
-    context = {
-        'active': 'stats'
-    }
+    context = {'active': 'stats'}
     return render(request, 'stats/stats.html', context)
+
 
 def get_patient(filter_patient=None):
     if filter_patient:
