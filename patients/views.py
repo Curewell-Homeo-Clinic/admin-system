@@ -30,7 +30,6 @@ def dashboard(request):
         'recent_appointments': recent_appointments,
         'total_patients': Patient.objects.all().count(),
         'total_appointments': Appointment.objects.all().count(),
-        'total_doctors': Doctor.objects.all().count(),
         'total_sales': get_total_monthly_sales(),
         'active': 'dashboard'
     }
