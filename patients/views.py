@@ -58,10 +58,7 @@ def get_daily_sales_chart_data(request, year, month):
     for day in range(1, len(sales_dict) + 1):
         sales_dict[day] = get_day_sales(date(year, month, day))
 
-    return JsonResponse({
-        # 'labels': list(sales_dict.keys()),
-        'data': list(sales_dict.values())
-    })
+    return JsonResponse({'data': list(sales_dict.values())})
 
 
 @login_required(login_url=LOGIN_URL)
