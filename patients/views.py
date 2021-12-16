@@ -1,19 +1,14 @@
 from .models import Appointment, Patient, Doctor, Invoice
+from .utils import get_total_monthly_sales
 from django.shortcuts import render
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
 from django.http import JsonResponse
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 LOGIN_URL = getattr(settings, 'LOGIN_URL')
-
-def get_total_sales():
-    total_sales = Invoice.objects.all().aggregate(
-        Sum('total_fee'))['total_fee__sum']
-    return total_sales
 
 
 @login_required(login_url=LOGIN_URL)
@@ -36,7 +31,7 @@ def dashboard(request):
         'total_patients': Patient.objects.all().count(),
         'total_appointments': Appointment.objects.all().count(),
         'total_doctors': Doctor.objects.all().count(),
-        'total_sales': get_total_sales(),
+        'total_sales': get_total_monthly_sales(),
         'active': 'dashboard'
     }
     return render(request, 'dashboard/dashboard.html', context)
