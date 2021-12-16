@@ -1,5 +1,5 @@
 import calendar
-from datetime import date
+from datetime import date, datetime
 from django.db.models import Sum
 
 from .models import Invoice
@@ -37,6 +37,16 @@ def get_month_sales(year: int, month: int) -> int:
     sales = Invoice.objects.filter(
         date__range=[first_day, last_day]).aggregate(
             Sum('total_fee'))['total_fee__sum']
+
+    if sales != None:
+        return sales
+
+    return 0
+
+
+def get_day_sales(date: datetime.date) -> int:
+    sales = Invoice.objects.filter(date=date).aggregate(
+        Sum('total_fee'))['total_fee__sum']
 
     if sales != None:
         return sales
