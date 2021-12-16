@@ -1,5 +1,6 @@
+from datetime import date
 from .models import Appointment, Patient, Doctor, Invoice
-from .utils import get_current_month_sales, get_year_dict, get_month_sales
+from .utils import get_current_month_sales, get_day_sales, get_month_dict, get_year_dict, get_month_sales, MONTHS
 from django.shortcuts import render
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
@@ -41,16 +42,24 @@ def dashboard(request):
 def get_monthly_sales_chart_data(request, year):
     sales_dict = get_year_dict()
 
-    months = [
-        'January', 'February', 'March', 'April', 'May', 'June', 'July',
-        'August', 'September', 'October', 'November', 'December'
-    ]
-
-    for month in months:
-        sales_dict[month] = get_month_sales(year, months.index(month) + 1)
+    for month in MONTHS:
+        sales_dict[month] = get_month_sales(year, MONTHS.index(month) + 1)
 
     return JsonResponse({
         'labels': list(sales_dict.keys()),
+        'data': list(sales_dict.values())
+    })
+
+
+@staff_member_required
+def get_daily_sales_chart_data(request, year, month):
+    sales_dict = get_month_dict(month=month, year=year)
+
+    for day in range(1, len(sales_dict) + 1):
+        sales_dict[day] = get_day_sales(date(year, month, day))
+
+    return JsonResponse({
+        # 'labels': list(sales_dict.keys()),
         'data': list(sales_dict.values())
     })
 

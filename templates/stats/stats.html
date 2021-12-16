@@ -5,7 +5,14 @@
 
 {% block body %}
 <div p="2" id="chart_container">
-	<canvas id="sales_chart"></canvas>
+	<div class="row">
+		<div class="col-sm">
+			<canvas id="sales_chart__monthly"></canvas>
+		</div>
+		<div class="col-sm">
+			<canvas id="sales_chart__yearly"></canvas>
+		</div>
+	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
