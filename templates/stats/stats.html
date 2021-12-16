@@ -1,8 +1,11 @@
-
 {% extends "base.html" %}
 
 {% block title %} Stats {% endblock %}
 
 
 {% block body %}
+<div p="2" id="chart_container">
+	<canvas id="sales_chart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
