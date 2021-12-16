@@ -15,7 +15,7 @@ def get_current_month_sales():
         Sum('total_fee'))['total_fee__sum']
 
 
-months = [
+MONTHS = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
     'September', 'October', 'November', 'December'
 ]
@@ -24,10 +24,21 @@ months = [
 def get_year_dict():
     year_dict = dict()
 
-    for month in months:
+    for month in MONTHS:
         year_dict[month] = 0
 
     return year_dict
+
+
+def get_month_dict(month: int, year: int) -> dict:
+    month_dict = dict()
+
+    num_days = calendar.monthrange(year, month)[1]
+
+    for i in range(1, num_days + 1):
+        month_dict[i] = 0
+
+    return month_dict
 
 
 def get_month_sales(year: int, month: int) -> int:

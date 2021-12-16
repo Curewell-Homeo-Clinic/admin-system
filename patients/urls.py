@@ -3,7 +3,8 @@ from django.urls import path
 from .views import (appointment_detail, appointment_list, dashboard,
                     doctor_detail, doctor_list, patient_list, patient_detail,
                     invoice_list, invoice_detail, invoice_print,
-                    get_monthly_sales_chart_data, stats)
+                    get_monthly_sales_chart_data, stats,
+                    get_daily_sales_chart_data)
 
 urlpatterns = [
     path('', dashboard, name='index'),
@@ -20,4 +21,7 @@ urlpatterns = [
     path('api/v1/get_sales/<int:year>',
          get_monthly_sales_chart_data,
          name='api__get__monthly_sales'),
+    path('api/v1/get_sales/<int:year>/<int:month>',
+         get_daily_sales_chart_data,
+         name='api__get__daily_sales'),
 ]
