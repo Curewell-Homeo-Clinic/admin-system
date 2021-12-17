@@ -27,7 +27,7 @@ function removeAnimation(data, config) {
 (async function createYearChart() {
   const year = new Date().getFullYear();
   const salesDataYearly = await (
-    await fetch(`/api/v1/get_sales/${year}`)
+    await fetch(`/api/v1/get_sales/${year}`, { cache: "force-cache" })
   ).json();
 
   const data = {
