@@ -6,7 +6,7 @@ const ctx__monthly = document
   const year = new Date().getFullYear();
   const month = new Date().getMonth() + 1; // jan starts at 0
   const salesDataMonthly = await (
-    await fetch(`/api/v1/get_sales/${year}/${month}`)
+    await fetch(`/api/v1/get_sales/${year}/${month}`, { cache: "force-cache" })
   ).json();
 
   let labels = [];
