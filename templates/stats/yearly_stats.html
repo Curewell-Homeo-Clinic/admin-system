@@ -1,0 +1,34 @@
+<div class="row g-3 my-2">
+	<h3 id="year_stats_head">This Year</h3>
+	<script>
+		const year_stats_head = document.getElementById("year_stats_head");
+		year_stats_head.innerHTML = `This Year - ${new Date().getFullYear()}`;
+	</script>
+	<div class="col-md-3">
+		<div class="p-3 bg-white shadow-sm d-flex justify-content-center align-items-center rounded"
+			style="cursor: pointer;">
+			<div>
+				<p class="fs-5">Patients</p>
+				<h3 class="fs-2">{{ current_year_stats.patients }}</h3>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="p-3 bg-white shadow-sm d-flex justify-content-center align-items-center rounded"
+			style="cursor: pointer;">
+			<div>
+				<p class="fs-5">Appointments</p>
+				<h3 class="fs-2">{{ current_year_stats.appointments }}</h3>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="p-3 bg-white shadow-sm d-flex justify-content-center align-items-center rounded"
+			style="cursor: pointer;">
+			<div>
+				<p class="fs-5">Sales</p>
+				<h3 class="fs-2 money">{{ current_year_stats.sales }}</h3>
+			</div>
+		</div>
+	</div>
+</div>

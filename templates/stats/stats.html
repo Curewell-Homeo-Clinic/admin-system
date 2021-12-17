@@ -4,13 +4,16 @@
 
 
 {% block body %}
-<!-- TODO: add stats -->
 <div p="2" id="chart_container">
+	{% include './gross_stats.html' %}
+	<hr />
 	<div class="row">
 		<div class="col-sm">
+			{% include './monthly_stats.html' %}
 			<canvas id="sales_chart__monthly"></canvas>
 		</div>
 		<div class="col-sm">
+			{% include './yearly_stats.html' %}
 			<canvas id="sales_chart__yearly"></canvas>
 		</div>
 	</div>
