@@ -1,6 +1,8 @@
 from datetime import date
 from .models import Appointment, Patient, Doctor, Invoice
-from .utils import get_current_month_sales, get_day_sales, get_month_dict, get_year_dict, get_month_sales, MONTHS
+from .utils import (get_current_month_stats, get_current_month_sales,
+                    get_current_year_stats, get_day_sales, get_gross_stats,
+                    get_month_dict, get_year_dict, get_month_sales, MONTHS)
 from django.shortcuts import render
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
@@ -63,7 +65,12 @@ def get_daily_sales_chart_data(request, year, month):
 
 @login_required(login_url=LOGIN_URL)
 def stats(request):
-    context = {'active': 'stats'}
+    context = {
+        'active': 'stats',
+        'current_month_stats': get_current_month_stats(),
+        'current_year_stats': get_current_year_stats(),
+        'gross_stats': get_gross_stats()
+    }
     return render(request, 'stats/stats.html', context)
 
 
