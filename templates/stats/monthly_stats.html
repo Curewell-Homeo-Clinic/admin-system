@@ -1,0 +1,48 @@
+<div class="row g-3 my-2">
+	<h3 id="month_stats_head">This Month</h3>
+	<script>
+		const monthNames = [
+			"January",
+			"February",
+			"March",
+			"April",
+			"May",
+			"June",
+			"July",
+			"August",
+			"September",
+			"October",
+			"November",
+			"December",
+		];
+		const month_stats_head = document.getElementById("month_stats_head");
+		month_stats_head.innerHTML = `This Month - ${monthNames[new Date().getMonth()]}`;
+	</script>
+	<div class="col-md-3">
+		<div class="p-3 bg-white shadow-sm d-flex justify-content-center align-items-center rounded"
+			style="cursor: pointer;">
+			<div>
+				<p class="fs-5">Patients</p>
+				<h3 class="fs-2">{{ current_month_stats.patients }}</h3>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="p-3 bg-white shadow-sm d-flex justify-content-center align-items-center rounded"
+			style="cursor: pointer;">
+			<div>
+				<p class="fs-5">Appointments</p>
+				<h3 class="fs-2">{{ current_month_stats.appointments }}</h3>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="p-3 bg-white shadow-sm d-flex justify-content-center align-items-center rounded"
+			style="cursor: pointer;">
+			<div>
+				<p class="fs-5">Sales</p>
+				<h3 class="fs-2 money">{{ current_month_stats.sales }}</h3>
+			</div>
+		</div>
+	</div>
+</div>

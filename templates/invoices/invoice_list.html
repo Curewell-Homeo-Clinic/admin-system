@@ -31,7 +31,7 @@
 				<td style="text-transform: capitalize;">{{ invoice.doctor.first_name }} {{ invoice.doctor.last_name }}
 				</td>
 				<td>{{ invoice.date }}</td>
-				<td class="money">&#8377;{{ invoice.total_fee }}</td>
+				<td class="money">{{ invoice.total_fee }}</td>
 				<td>
 					<a href="{% url 'invoice' invoice.id %}" class="btn btn-sm btn-outline-secondary">
 						<i class="fas fa-eye me-2"></i>

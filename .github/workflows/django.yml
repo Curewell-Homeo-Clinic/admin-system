@@ -2,7 +2,7 @@ name: Django CI
 
 on:
   pull_request:
-    branches: [master]
+    branches: [master, dev]
     paths: 
       - '.github/workflows/**'
       - 'patient_management_system/**'
