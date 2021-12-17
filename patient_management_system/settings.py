@@ -15,10 +15,7 @@ SECRET_KEY = config(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    'curewell.herokuapp.com', '127.0.0.1', 'localhost',
-    config('HOST', default='*')
-]
+ALLOWED_HOSTS = ['*']
 
 # EMAIL Config
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
