@@ -70,15 +70,15 @@
 						<td>1.</td>
 						<td>Consultation Fees</td>
 						<td>1</td>
-						<td class="money">&#8377;{{ invoice.consulation_fee }}</td>
-						<td class="money">&#8377;{{ invoice.consulation_fee }}</td>
+						<td class="money">{{ invoice.consulation_fee }}</td>
+						<td class="money">{{ invoice.consulation_fee }}</td>
 					</tr>
 					<tr>
 						<td>2.</td>
 						<td>Medicine Fees</td>
 						<td>1</td>
-						<td class="money">&#8377;{{ invoice.medicine_fee }}</td>
-						<td class="money">&#8377;{{ invoice.medicine_fee }}</td>
+						<td class="money">{{ invoice.medicine_fee }}</td>
+						<td class="money">{{ invoice.medicine_fee }}</td>
 					</tr>
 					{% for i in blank_row %}
 					<tr>
@@ -93,7 +93,7 @@
 						<td class="fw-bold fs-4" style="text-align: right;" colspan="4">
 							Total
 						</td>
-						<td class="money">&#8377;{{ invoice.total_fee }}</td>
+						<td class="money">{{ invoice.total_fee }}</td>
 					</tr>
 				</tbody>
 			</table>
