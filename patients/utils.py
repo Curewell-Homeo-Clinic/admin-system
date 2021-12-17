@@ -51,7 +51,8 @@ def get_gross_stats() -> dict:
     return {
         'patients': Patient.objects.all().count(),
         'appointments': Appointment.objects.all().count(),
-        'sales': Invoice.objects.all().count(),
+        'sales': Invoice.objects.all().aggregate(Sum('total_fee'))['total_fee__sum'],
+		'invoices': Invoice.objects.all().count(),
     }
 
 
@@ -61,7 +62,7 @@ def get_current_year_stats() -> dict:
     return {
         'patients': Patient.objects.filter(admitted_at__year=year).count(),
         'appointments': Appointment.objects.filter(date__year=year).count(),
-        'sales': Invoice.objects.filter(date__year=year).count(),
+        'sales': Invoice.objects.filter(date__year=year).aggregate(Sum('total_fee'))['total_fee__sum'],
     }
 
 
