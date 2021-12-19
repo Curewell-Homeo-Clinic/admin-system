@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'patients.apps.PatientsConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -46,7 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'django.middleware.gzip.GZipMiddleware'
+    'django.middleware.gzip.GZipMiddleware'
 ]
 
 ROOT_URLCONF = 'patient_management_system.urls'
@@ -165,3 +166,8 @@ sentry_sdk.init(dsn=config('SENTRY_DSN'),
                 integrations=[DjangoIntegration()],
                 traces_sample_rate=1.0,
                 send_default_pii=True)
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+    'rest_framework.pagination.LimitOffsetPagination'
+}
