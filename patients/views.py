@@ -1,8 +1,17 @@
 from datetime import date
 from .models import Appointment, Patient, Doctor, Invoice
-from .utils import (get_current_month_stats, get_current_month_sales,
-                    get_current_year_stats, get_day_sales, get_gross_stats,
-                    get_month_dict, get_year_dict, get_month_sales, MONTHS)
+from patients.utils.stats.month import (
+    get_current_month_stats,
+    get_current_month_sales,
+    get_month_dict,
+    get_day_sales,
+)
+
+from patients.utils.stats.year import (get_month_sales, get_year_dict,
+                                       get_current_year_stats, MONTHS)
+
+from patients.utils.stats import get_gross_stats
+
 from django.shortcuts import render
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
