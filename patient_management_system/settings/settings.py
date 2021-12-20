@@ -3,7 +3,7 @@ import os
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config(
@@ -16,14 +16,6 @@ SECRET_KEY = config(
 DEBUG = config('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['*']
-
-# EMAIL Config
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 # Application definition
 
@@ -70,41 +62,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'patient_management_system.wsgi.application'
 
-database_name = config('DATABASE_NAME')
-database_host = config('DATABASE_HOST')
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': database_name,
-        'CLIENT': {
-            'host': database_host,
-        }
-    }
-}
-
-import sys
-if 'test' in sys.argv or 'test_coverage' in sys.argv:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-
-CACHE_TTL = 60 * 1500
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': config('REDIS_URL'),
-        'OPTIONS': {
-            'PASSWORD': config('REDIS_PASSWORD'),
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        },
-        'KEY_PREFIX': 'curewell',
-        'TIMEOUT': CACHE_TTL,
-    }
-}
-
 # Password validation
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -126,10 +83,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/admin/login/'
-
 # Internationalization
 
 LANGUAGE_CODE = 'en-us'
@@ -141,33 +94,3 @@ USE_I18N = False
 USE_L10N = True
 
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-]
-
-# Sentry Integration
-
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
-sentry_sdk.init(dsn=config('SENTRY_DSN'),
-                integrations=[DjangoIntegration()],
-                traces_sample_rate=1.0,
-                send_default_pii=True)
-
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS':
-    'rest_framework.pagination.LimitOffsetPagination'
-}
