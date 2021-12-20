@@ -1,9 +1,10 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-from patients.send_sms import send_sms
-from .send_mail import send_mail
+from patients.utils.send_sms import send_sms
+from patients.utils.send_mail import send_mail
 from decouple import config
+
 
 class Patient(models.Model):
     id = models.AutoField(primary_key=True)
@@ -16,9 +17,9 @@ class Patient(models.Model):
         validators=[MaxValueValidator(100),
                     MinValueValidator(1)])
     admitted_at = models.DateField(auto_now_add=True, blank=True, null=True)
-    email= models.EmailField(blank=True, null=True)
-    address= models.CharField(max_length=200, blank=True, null=True)
-    occupation= models.CharField(max_length=100, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    address = models.CharField(max_length=200, blank=True, null=True)
+    occupation = models.CharField(max_length=100, blank=True, null=True)
     ailment = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
@@ -36,8 +37,8 @@ class Doctor(models.Model):
         null=True,
         validators=[MaxValueValidator(100),
                     MinValueValidator(1)])
-    address= models.CharField(max_length=200, blank=True, null=True)
-    specialization= models.CharField(max_length=100, blank=True, null=True)
+    address = models.CharField(max_length=200, blank=True, null=True)
+    specialization = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return f'{ self.first_name } { self.last_name }'
@@ -66,17 +67,19 @@ class Appointment(models.Model):
         # send_sms(self, self.patient.phone_no, message)
         super().save(*args, **kwargs)
 
-class Invoice(models.Model):
-	id = models.AutoField(primary_key=True)
-	patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
-	doctor = models.ForeignKey(Doctor, on_delete=models.DO_NOTHING)
-	date = models.DateField(blank=True, null=True, auto_now_add=True)
-	time = models.TimeField(auto_now_add=True, blank=True, null=True)
-	consulation_fee = models.PositiveSmallIntegerField(blank=True, null=True, default=config('CONSULTATION_FEE'))
-	medicine_fee = models.PositiveSmallIntegerField(blank=True, null=True)
-	total_fee = models.PositiveSmallIntegerField(blank=True, null=True)
 
-	def save(self, *args, **kwargs):
-		total_fee = self.consulation_fee + self.medicine_fee
-		self.total_fee = total_fee
-		super().save(*args, **kwargs)
+class Invoice(models.Model):
+    id = models.AutoField(primary_key=True)
+    patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
+    doctor = models.ForeignKey(Doctor, on_delete=models.DO_NOTHING)
+    date = models.DateField(blank=True, null=True, auto_now_add=True)
+    time = models.TimeField(auto_now_add=True, blank=True, null=True)
+    consulation_fee = models.PositiveSmallIntegerField(
+        blank=True, null=True, default=config('CONSULTATION_FEE'))
+    medicine_fee = models.PositiveSmallIntegerField(blank=True, null=True)
+    total_fee = models.PositiveSmallIntegerField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        total_fee = self.consulation_fee + self.medicine_fee
+        self.total_fee = total_fee
+        super().save(*args, **kwargs)
