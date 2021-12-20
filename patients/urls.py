@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from .views import (appointment_detail, appointment_list, dashboard,
                     doctor_detail, doctor_list, patient_list, patient_detail,
@@ -24,4 +24,10 @@ urlpatterns = [
     path('api/v1/get_sales/<int:year>/<int:month>',
          get_daily_sales_chart_data,
          name='api__get__daily_sales'),
+]
+
+urlpatterns += [
+    path('api-auth/', include('rest_framework.urls',
+                              namespace='rest_framework')),
+    path('api/v1/', include('patients.api.urls')),
 ]
