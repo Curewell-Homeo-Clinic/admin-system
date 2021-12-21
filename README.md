@@ -17,4 +17,5 @@ Patient Management System for Curewell Homoeopathic Clinic.
 ---
 **Note for contributors**
 - Read our contributing guidelines beore propsing any changes [here](https://github.com/Curewell-Homeo-Clinic/admin-system/blob/master/CONTRIBUTING.md).
+- Join our discord changel from [here](https://discord.gg/s9xNnaEY) to join on discussions.
 - Your interest is in the project is very much appreciated 🥰.
