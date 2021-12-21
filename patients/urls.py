@@ -1,8 +1,4 @@
 from django.urls import path, include
-
-from .views_file import (get_monthly_sales_chart_data,
-                         get_daily_sales_chart_data)
-
 from patients.views.dashboard import dashboard
 from patients.views.patient import patient_detail, patient_list
 from patients.views.doctor import doctor_detail, doctor_list
@@ -22,12 +18,6 @@ urlpatterns = [
     path('invoice/<int:pk>/', invoice_detail, name='invoice'),
     path('invoice/<int:pk>/print/', invoice_print, name='invoice_print'),
     path('stats/', stats, name='stats'),
-    # path('api/v1/get_sales/<int:year>',
-    #      get_monthly_sales_chart_data,
-    #      name='api__get__monthly_sales'),
-    # path('api/v1/get_sales/<int:year>/<int:month>',
-    #      get_daily_sales_chart_data,
-    #      name='api__get__daily_sales'),
 ]
 
 urlpatterns += [
