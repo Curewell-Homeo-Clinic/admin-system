@@ -31,7 +31,5 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('api-auth/', include('rest_framework.urls',
-                              namespace='rest_framework')),
     path('api/v1/', include('patients.api.urls')),
 ]
