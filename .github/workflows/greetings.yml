@@ -11,4 +11,4 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           issue-message: |
             Hello @${{ github.actor }}, thank you for your interest in this repo! Please follow the **Bug Report** template to fill out the steps to reproduce the issues.
-          pr-message: "Hello @${{ github.actor }}, thanks for sending a PR. Please be patient, I will review it as soon as possible."
+          pr-message: "Hello @${{ github.actor }}, thanks for sending a PR. Please be patient, I will review it as soon as possible, until then check out our discord chanel from [here](https://discord.gg/s9xNnaEY) to get updates and join on discussions."
