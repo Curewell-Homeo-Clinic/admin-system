@@ -3,6 +3,7 @@ Patient Management System for Curewell Homoeopathic Clinic.
 
 [![Django CI](https://github.com/Curewell-Homeo-Clinic/admin-system/actions/workflows/django.yml/badge.svg)](https://github.com/Curewell-Homeo-Clinic/admin-system/actions/workflows/django.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![codecov](https://codecov.io/gh/Curewell-Homeo-Clinic/admin-system/branch/dev/graph/badge.svg?token=Y17Q6LNOXG)](https://codecov.io/gh/Curewell-Homeo-Clinic/admin-system)
 ---
 
 ### Preview
