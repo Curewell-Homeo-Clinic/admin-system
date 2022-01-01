@@ -6,7 +6,7 @@ coreapi==2.3.3
 coreschema==0.0.4
 Deprecated==1.2.13
 Django==3.2.10
-django-redis==5.0.0
+django-redis==5.2.0
 django-restql==0.15.1
 djangorestframework==3.13.1
 djongo==1.3.6
