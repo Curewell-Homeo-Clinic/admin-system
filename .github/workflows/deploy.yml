@@ -14,12 +14,12 @@ jobs:
       - name: Sets env vars for trigger on master
         run: |
           echo "HEROKU_APP_NAME=curewell" >> $GITHUB_ENV
-        if: github.event.base_ref=='refs/heads/master'
+        if: github.ref == 'refs/heads/master'
 
       - name: Sets env vars for trigger on dev
         run: |
           echo "HEROKU_APP_NAME=curewell-dev" >> $GITHUB_ENV
-        if: github.event.base_ref=='refs/heads/dev'
+        if: github.ref == 'refs/heads/dev'
 
       - name: Release.
         uses: gonuit/heroku-docker-deploy@v1.3.3
