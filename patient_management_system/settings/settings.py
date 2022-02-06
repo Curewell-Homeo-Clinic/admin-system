@@ -43,12 +43,6 @@ MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware'
 ]
 
-# Using a secure-only CSRF cookie makes it more difficult for network traffic sniffers to steal the CSRF token.
-CSRF_COOKIE_SECURE=True
-
-# Using a secure-only session cookie makes it more difficult for network traffic sniffers to hijack user sessions.
-SESSION_COOKIE_SECURE=True
-
 ROOT_URLCONF = 'patient_management_system.urls'
 
 TEMPLATES = [
