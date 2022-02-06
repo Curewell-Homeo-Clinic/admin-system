@@ -3,6 +3,8 @@ name: Deploy to Heroku
 on:
   push:
     branches: [master, dev]
+    
+  workflow_dispatch:
 
 jobs:
   build:
@@ -43,5 +45,3 @@ jobs:
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
           dockerfile_directory: ./
           dockerfile_name: Dockerfile
-          docker_options: "--no-cache"
-          process_type: web
