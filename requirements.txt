@@ -4,7 +4,6 @@ certifi==2021.10.8
 charset-normalizer==2.0.8
 coreapi==2.3.3
 coreschema==0.0.4
-coverage==6.2
 Deprecated==1.2.13
 Django==3.2.10
 django-redis==5.0.0

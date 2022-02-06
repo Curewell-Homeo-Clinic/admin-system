@@ -1,16 +1,16 @@
-name: Test App
+name: Django CI
 
 on:
   pull_request:
     branches: [master, dev]
-    paths:
-      - ".github/workflows/**"
-      - "patient_management_system/**"
-      - "patients/**"
-      - "manage.py"
-      - "requirements.txt"
-      - "!static/**"
-      - "!templates/**"
+    paths: 
+      - '.github/workflows/**'
+      - 'patient_management_system/**'
+      - 'patients/**'
+      - 'manage.py'
+      - 'requirements.txt'
+      - '!static/**'
+      - '!templates/**'
 
 jobs:
   test:
@@ -43,7 +43,7 @@ jobs:
 
       - name: Cache Dependencies
         uses: actions/cache@v2
-        with:
+        with: 
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
 
@@ -51,16 +51,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Run Tests and Generate Coverage Report
+  
+      - name: Run Tests
         run: |
-          python -m coverage run manage.py test
-          python -m coverage xml
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
-          flags: unittests
-          fail_ci_if_error: true
-          verbose: true
+          python manage.py test
