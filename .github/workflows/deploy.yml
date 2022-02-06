@@ -1,0 +1,33 @@
+name: Deploy to Heroku
+
+on:
+  push:
+    branches: [master, dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Sets env vars for trigger on master
+        run: |
+          echo "HEROKU_APP_NAME=curewell" >> $GITHUB_ENV
+        if: github.event.base_ref=='refs/heads/master'
+
+      - name: Sets env vars for trigger on dev
+        run: |
+          echo "HEROKU_APP_NAME=curewell-dev" >> $GITHUB_ENV
+        if: github.event.base_ref=='refs/heads/dev'
+
+      - name: Release.
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ env.HEROKU_APP_NAME }}
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
